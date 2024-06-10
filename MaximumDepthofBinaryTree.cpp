@@ -5,7 +5,7 @@
     the arguments list to include a 'depth' argument with a default
     value of '0' that gets incremented with each recursive call.
 
-    Runtime: 4ms (Beats 93.07% of users with C++)
+    Runtime: 3ms (Beats 93.07% of users with C++)
     Memory: 17.46mb (Beats 44.70% of users with C++)
 */
 class Solution {
