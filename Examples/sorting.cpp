@@ -1,5 +1,3 @@
-// You got this man, I believe in you
-
 // Printing statements
 #include <cstdio>
 
@@ -32,7 +30,7 @@ int main(int argc, char* argv[]) {
         printf("%i%s", input[i], i == (N-1)? "\n\n":", ");
 
     // Perform the desired sorting method
-    insertionSort(input, N);
+    selectionSort(input, N);
 
     // Check the final product and print the results
     printf("%s\n", check(input, N)? "Failed":"Passed");
