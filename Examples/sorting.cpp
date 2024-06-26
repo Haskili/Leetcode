@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
     // Define the input and perform
     // whatever preprocessing we need
     // (e.g. some randomization, etc.)
-    int input[10];
+    int input[5];
     int N = sizeof(input)/sizeof(*input);
     randomization(input, N);
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
         printf("%i%s", input[i], i == (N-1)? "\n\n":", ");
 
     // Perform the desired sorting method
-    selectionSort(input, N);
+    insertionSort(input, N);
 
     // Check the final product and print the results
     printf("%s\n", check(input, N)? "Failed":"Passed");
@@ -76,12 +76,12 @@ int check(int array[], int N) {
 void randomization(int array[], int N) {
     std::random_device device;
     std::mt19937 rng(device());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 100);
+    std::uniform_int_distribution<std::mt19937::result_type> P(1, 100);
 
     // For every element at position 'i'
     // of array[0..N], assign a random value
     for (int i = 0; i < N; i++)
-        array[i] = dist6(rng);
+        array[i] = P(rng);
 }
 
 /*
@@ -93,7 +93,7 @@ void randomization(int array[], int N) {
         - Loop through all indices 'i' of 'array'
         - For each iteration find what belongs at 'i'
 
-    That's to say that it's an O(n^2) time complexity algorithm.
+    That's to say that it's an O(N^2) time complexity algorithm.
     It's not pretty, but it serves as a good introduction into 
     how sorting works.
 */
@@ -125,10 +125,56 @@ void selectionSort(int array[], int N) {
 }
 
 /*
-    TODO
+    Perform insertion sort;
+
+    The method here is very similar to selection sort,
+    which is scanning a section of the input array
+    every inside of another loop. It works as follows,
+
+        - Iterate through all indices 'i' of 'array'
+        - For each value at 'i' we need to loop through
+          the sorted portion of 'array' [i - 1..0]
+
+        - While searching the sorted portion of 'array'
+          with index 'j', we continually swap up values
+          at 'j + 1' with 'j' until we find a value such
+          that it's less than the value at 'i'
+
+        - After the while loop completes we can set the
+          final value at 'j + 1' to it's proper value
+
+    While basic when you understand the method, it can be
+    a bit more challenging to grasp than selection sort.
+    However, it too has a O(N^2) time complexity. 
 */
 void insertionSort(int array[], int N) {
-    // TODO
+
+    // For indices 'i' in [1..N] of 'array'
+    for (int i = 1, j = 0, k = 0; i < N; i++) {
+
+        // Declare the current value we're comparing
+        // everything in the sorted portion to, 'k'
+        k = array[i];
+
+        // Set the value of the 'j' pointer,
+        // which is what we use to search the
+        // sorted inner array [0..i - 1] from
+        // the back to the front
+        j = i - 1;
+
+        // Continue iteration until either our
+        // 'j' pointer reaches the start of 'array'
+        // or until we find the spot that the value
+        // at 'i' should be inserted into
+        while (j >= 0 && array[j] > k) {
+            array[j + 1] = array[j];
+            j--;
+        }
+
+        // Set the 'j + 1' value of 'array'
+        // to it's proper value
+        array[j + 1] = k;
+    }
 }
 
 /*
@@ -152,7 +198,7 @@ void insertionSort(int array[], int N) {
     Visually looking at the algorithm in action, we
     see that elements "bubble" to the right position,
     thus the name. Similar to selection sort this has
-    a O(n^2) time complexity.
+    a O(N^2) time complexity.
 */
 void bubbleSort(int array[], int N) {
 
