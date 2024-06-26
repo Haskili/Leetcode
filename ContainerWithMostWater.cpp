@@ -18,8 +18,7 @@ public:
         int L = 0, R = N - 1;
 
         // Initialize values for tracking areas
-        int maximum = 0;
-        int current = 0;
+        int maximum = 0, current = 0;
 
         // While our left pointer hasn't yet encountered the right pointer
         while (L < R) {
