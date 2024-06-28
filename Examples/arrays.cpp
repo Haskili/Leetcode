@@ -56,7 +56,6 @@ int main(int argc, char* argv[]) {
         for (int j = 0; j < M; j++)
             C[i][j] = (i * M) + j;
     }
-
     printMatrix(C, N, M);
 
     // Mathmatical way of accessing all
@@ -72,19 +71,24 @@ int main(int argc, char* argv[]) {
     // and then go over 3 columns by adding '3' to it
     printf("%i\n\n", *(C[2] + 3));
 
-    // Printing the first element of each row looks like this
-    // with just one for-loop and using pointer arithmatic
+    // Here's a practical look, you can see that the addresses
+    // are the same regardless of how you access the data in 'C';
     //
-    // NOTE: There's some special math going on to calculate
-    //       what we're accessing. It works by accessing the start
-    //       of the C matrix, adding however many rows down we are
-    //       multiplied by how many columns it takes to get there
+    // Friendly Note: This specific instance of doing '+ 3' works
+    // because we FIRST access the row 'C[2]'. This is to say that
+    // if we tried something like 'C + (2 * M) + 3', it wouldn't work
+    // because each '1' value of that equation is working off the size
+    // of an 'int**' and not 'int*'.
     //
-    for (int i = 0; i < N; i++)
-        printf("%i%s", *(C + ((i + 1) * M)),
-                i == N - 1? "\n":", ");
+    printf("%i\n", &C[2][3]);
+    printf("%i\n\n", (C[2] + 3));
 
-    printf("\n");
+    // Cleanup the dynamically allocated 
+    // 'B' and 'C' datastructures before
+    // exiting the program
+    delete[] B;
+    for(int i = 0; i < N; i++)
+        delete[] C[i];
 
     return 0;
 }
